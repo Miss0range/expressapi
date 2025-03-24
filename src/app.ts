@@ -1,20 +1,18 @@
 import express from 'express';
+import { healthRouter, calculatorRouter } from './routers';
+import {errorHandler, logger} from './middleware'
+import { addTimestamp } from './middleware';
 const app = express();
 const port = 3000;
 
-//get method with empty req
-app.get('/', (req, res) => {
-    res.send('Hello world');
-});
+app.use(addTimestamp);
+app.use(logger);
 
-//get method with id
-app.get('/:id', (req,res) => {
-    console.log(req.params);
-    console.log(req.query);
-    console.log(req.headers);
-    res.send(`Hello ${req.params.id}`);
-});
 
+
+app.use('/health', healthRouter);
+app.use('/calculator', calculatorRouter);
+app.use(errorHandler);
 app.listen(port, ()=>{
     console.log(`App is listening on port ${port}.`);
 });
