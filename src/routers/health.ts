@@ -2,7 +2,7 @@ import {Router} from 'express';
 export const router = Router();
 
 router.get('/', (req, res)=> {
-    throw new Error('e');
+    console.log(req.body);
     res.send({
         success:true,
         message: 'Getting player health',
