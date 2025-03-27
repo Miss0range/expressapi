@@ -7,12 +7,13 @@ function getRandomInt(min: number, max: number): number {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+}
 
 router.get('/one', (req, res) =>{
     const number = getRandomInt(1,tarotCards.length);
     const card = tarotCards[number];
     res.send({
+        success: true,
         result: card
     });
 });
@@ -28,6 +29,14 @@ router.get('/celtic', (req, res) =>{
         }
     }
     res.send({
+        success: true,
         result: hand
+    });
+});
+
+router.get('/:any', (req, res) => {
+    res.send({
+        success: false,
+        message: 'Invalid Spread.'
     });
 });

@@ -1,5 +1,6 @@
-import {Router, Request} from 'express';
+import {Router, Request, Response} from 'express';
 import { CalculatorOperationBody } from '../types/calculator';
+import { validateCalculator as validator } from '../middleware/';
 export const router = Router();
 
 router.get('/help', (req, res) => {
@@ -16,8 +17,7 @@ router.get('/help', (req, res) => {
     });
 });
 
-
-router.get('/', (req: Request<{}, any, CalculatorOperationBody>, res)=>{
+router.get('/', validator, (req: Request<{}, any, CalculatorOperationBody>, res: Response) =>{
     let calculation : string = `${Number(req.body.oprandLeft)} ${req.body.operator} ${Number(req.body.oprandRight)}`;
     let result : number = eval(calculation);
     console.log(result);
